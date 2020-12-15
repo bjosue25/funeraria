@@ -1,248 +1,323 @@
-USE [master]
-GO
-/****** Object:  Database [funeraria eternidad]    Script Date: 14/12/2020 23:27:17 ******/
-CREATE DATABASE [funeraria eternidad]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'funeraria eternidad', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\funeraria eternidad.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'funeraria eternidad_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL13.MSSQLSERVER\MSSQL\DATA\funeraria eternidad_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
-GO
-ALTER DATABASE [funeraria eternidad] SET COMPATIBILITY_LEVEL = 130
-GO
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [funeraria eternidad].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-ALTER DATABASE [funeraria eternidad] SET ANSI_NULL_DEFAULT OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET ANSI_NULLS OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET ANSI_PADDING OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET ANSI_WARNINGS OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET ARITHABORT OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET AUTO_CLOSE OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET AUTO_SHRINK OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET AUTO_UPDATE_STATISTICS ON 
-GO
-ALTER DATABASE [funeraria eternidad] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET CURSOR_DEFAULT  GLOBAL 
-GO
-ALTER DATABASE [funeraria eternidad] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET NUMERIC_ROUNDABORT OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET QUOTED_IDENTIFIER OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET RECURSIVE_TRIGGERS OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET  DISABLE_BROKER 
-GO
-ALTER DATABASE [funeraria eternidad] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET TRUSTWORTHY OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET PARAMETERIZATION SIMPLE 
-GO
-ALTER DATABASE [funeraria eternidad] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET HONOR_BROKER_PRIORITY OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET RECOVERY FULL 
-GO
-ALTER DATABASE [funeraria eternidad] SET  MULTI_USER 
-GO
-ALTER DATABASE [funeraria eternidad] SET PAGE_VERIFY CHECKSUM  
-GO
-ALTER DATABASE [funeraria eternidad] SET DB_CHAINING OFF 
-GO
-ALTER DATABASE [funeraria eternidad] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-ALTER DATABASE [funeraria eternidad] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-ALTER DATABASE [funeraria eternidad] SET DELAYED_DURABILITY = DISABLED 
-GO
-EXEC sys.sp_db_vardecimal_storage_format N'funeraria eternidad', N'ON'
-GO
-ALTER DATABASE [funeraria eternidad] SET QUERY_STORE = OFF
-GO
-USE [funeraria eternidad]
-GO
-ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 0;
-GO
-ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET MAXDOP = PRIMARY;
-GO
-ALTER DATABASE SCOPED CONFIGURATION SET LEGACY_CARDINALITY_ESTIMATION = OFF;
-GO
-ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET LEGACY_CARDINALITY_ESTIMATION = PRIMARY;
-GO
-ALTER DATABASE SCOPED CONFIGURATION SET PARAMETER_SNIFFING = ON;
-GO
-ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET PARAMETER_SNIFFING = PRIMARY;
-GO
-ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
-GO
-ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES = PRIMARY;
-GO
-USE [funeraria eternidad]
-GO
-/****** Object:  Table [dbo].[cliente]    Script Date: 14/12/2020 23:27:17 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[cliente](
-	[cli_id] [int] NOT NULL,
-	[cli_nombre] [varchar](30) NULL,
-	[cli_apellido] [varchar](30) NULL,
-	[cli_telefono] [int] NOT NULL,
-	[cli_direccion] [varchar](30) NULL,
-	[funer_id] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[cli_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
 
-GO
-/****** Object:  Table [dbo].[empleado]    Script Date: 14/12/2020 23:27:17 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[empleado](
-	[empl_id] [int] NOT NULL,
-	[empl_nombre] [varchar](50) NOT NULL,
-	[empl_apellido] [varchar](50) NOT NULL,
-	[empl_direccion] [varchar](50) NOT NULL,
-	[empl_fechadenacimiento] [date] NOT NULL,
-	[empl_fechadeingreso] [date] NOT NULL,
-	[tipo_empleado] [varchar](50) NOT NULL,
-	[ser_id] [int] NULL,
-	[vela_id] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[empl_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE (
+   CLI_ID               INT             not null,
+   CLI_NOMBRE           CHAR(20)             not null,
+   CLI_APELLIDO         CHAR(20)             not null,
+   CLI_TELEFONO         INT                 not null,
+   CLI_DIRECCION        Varchar(100)               not null,
+   constraint PK_CLIENTE primary key (CLI_ID)
+);
 
-GO
-/****** Object:  Table [dbo].[fallecidos]    Script Date: 14/12/2020 23:27:17 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[fallecidos](
-	[fallecido_id] [int] NOT NULL,
-	[fall_name] [char](40) NULL,
-	[fall_apellido] [char](40) NULL,
-	[fall_genero] [char](40) NULL,
-	[fall_fecha_de_naci] [date] NULL,
-	[fall_fecha_defunsion] [date] NULL,
-	[fall_hora_defunsion] [time](7) NULL,
-	[fall_causa_de_m] [char](40) NULL,
-	[serv_id] [int] NULL,
- CONSTRAINT [PK_fallecidos] PRIMARY KEY CLUSTERED 
-(
-	[fallecido_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+/*==============================================================*/
+/* Index: CLIENTE_PK                                            */
+/*==============================================================*/
+create unique index CLIENTE_PK on CLIENTE (
+CLI_ID
+);
 
-GO
-/****** Object:  Table [dbo].[funeraria_eternidad]    Script Date: 14/12/2020 23:27:17 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[funeraria_eternidad](
-	[funer_id] [int] NOT NULL,
-	[funer_direccion] [varchar](30) NOT NULL,
-	[funer_telefono] [int] NOT NULL,
-	[empl_id] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[funer_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+/*==============================================================*/
+/* Table: EMPLEADO                                              */
+/*==============================================================*/
+create table EMPLEADO (
+   EMPL_ID              INT                 not null,
+   FUNER_ID             INT            null,
+   EMPL_NOMBRES         CHAR(20)             not null,
+   EMPL_APELLIDOS       CHAR(20)             not null,
+   EMPL_DIRECCION       CHAR(50)               not null,
+   EMPL_FECHA_DE_NAC    date                 not null,
+   EMPL_FECHA_DE_IMGRESO date               not null,
+   TIPO_EMPLEADO        CHAR(20)             null,
+   constraint PK_EMPLEADO primary key (EMPL_ID)
+);
 
-GO
-/****** Object:  Table [dbo].[servicios]    Script Date: 14/12/2020 23:27:17 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[servicios](
-	[tipo_ser_id] [int] NOT NULL,
-	[tipo_ser_nombre] [char](50) NULL,
-	[tipo_ser_precio] [numeric](18, 0) NULL,
-	[tipo_ser_tiempo] [time](7) NULL,
-	[empl_id] [int] NULL,
-	[fall_id] [int] NULL,
-	[promedio] [time](7) NULL,
- CONSTRAINT [PK_servicios] PRIMARY KEY CLUSTERED 
-(
-	[tipo_ser_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+/*==============================================================*/
+/* Index: EMPLEADOS_PK                                          */
+/*==============================================================*/
+create unique index EMPLEADOS_PK on EMPLEADO (
+EMPL_ID
+);
 
-GO
-/****** Object:  Table [dbo].[velatorio]    Script Date: 14/12/2020 23:27:17 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[velatorio](
-	[vela_id] [int] NOT NULL,
-	[vela_ n_sala] [int] NOT NULL,
-	[vela_hora_de_reserva] [time](7) NOT NULL,
-	[vela_hora_de_limpieza] [time](7) NOT NULL,
-	[vela_capacidad] [int] NOT NULL,
-	[funer_id] [int] NULL,
-	[fall_id] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[vela_id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+/*==============================================================*/
+/* Index: RELATIONSHIP_1_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_1_FK on EMPLEADO (
+FUNER_ID
+);
 
-GO
-INSERT [dbo].[cliente] ([cli_id], [cli_nombre], [cli_apellido], [cli_telefono], [cli_direccion], [funer_id]) VALUES (1, N'Jose', N'Delgado', 98447062, N'calle 25 ave 111', 1)
-INSERT [dbo].[empleado] ([empl_id], [empl_nombre], [empl_apellido], [empl_direccion], [empl_fechadenacimiento], [empl_fechadeingreso], [tipo_empleado], [ser_id], [vela_id]) VALUES (1, N'Carlos', N'Proaño', N'calle 110 ave 10', CAST(N'2000-10-11' AS Date), CAST(N'2027-02-05' AS Date), N'vendedor', 1, 1)
-INSERT [dbo].[empleado] ([empl_id], [empl_nombre], [empl_apellido], [empl_direccion], [empl_fechadenacimiento], [empl_fechadeingreso], [tipo_empleado], [ser_id], [vela_id]) VALUES (2, N'Jose ', N'Cedeño', N'calle 11 ave 13', CAST(N'2002-11-30' AS Date), CAST(N'2040-04-15' AS Date), N'vendedor', 2, 2)
-INSERT [dbo].[empleado] ([empl_id], [empl_nombre], [empl_apellido], [empl_direccion], [empl_fechadenacimiento], [empl_fechadeingreso], [tipo_empleado], [ser_id], [vela_id]) VALUES (3, N'Angel', N'Moreira', N'calle 23 ave 24', CAST(N'1980-10-20' AS Date), CAST(N'2010-02-10' AS Date), N'personal mantenimiento', 3, 3)
-INSERT [dbo].[empleado] ([empl_id], [empl_nombre], [empl_apellido], [empl_direccion], [empl_fechadenacimiento], [empl_fechadeingreso], [tipo_empleado], [ser_id], [vela_id]) VALUES (4, N'Maria', N'Lopez', N'calle 110 ave 15', CAST(N'1970-12-11' AS Date), CAST(N'2009-02-15' AS Date), N'maquillaje', 4, 4)
-INSERT [dbo].[empleado] ([empl_id], [empl_nombre], [empl_apellido], [empl_direccion], [empl_fechadenacimiento], [empl_fechadeingreso], [tipo_empleado], [ser_id], [vela_id]) VALUES (5, N'Lucy', N'Macias', N'calle 12 ave 15 ', CAST(N'2000-02-05' AS Date), CAST(N'2028-04-10' AS Date), N'personal mantenimiento', 5, 1)
-INSERT [dbo].[empleado] ([empl_id], [empl_nombre], [empl_apellido], [empl_direccion], [empl_fechadenacimiento], [empl_fechadeingreso], [tipo_empleado], [ser_id], [vela_id]) VALUES (6, N'Mario', N'Mendoza', N'calle 111 ave 10', CAST(N'2000-10-23' AS Date), CAST(N'2026-10-10' AS Date), N'embalsamiento', 6, 2)
-INSERT [dbo].[fallecidos] ([fallecido_id], [fall_name], [fall_apellido], [fall_genero], [fall_fecha_de_naci], [fall_fecha_defunsion], [fall_hora_defunsion], [fall_causa_de_m], [serv_id]) VALUES (1, N'Juan                                    ', N'Macias                                  ', N'Masculino                               ', CAST(N'2000-11-25' AS Date), CAST(N'2050-02-23' AS Date), CAST(N'14:00:00' AS Time), N'Covid19                                 ', 1)
-INSERT [dbo].[fallecidos] ([fallecido_id], [fall_name], [fall_apellido], [fall_genero], [fall_fecha_de_naci], [fall_fecha_defunsion], [fall_hora_defunsion], [fall_causa_de_m], [serv_id]) VALUES (2, N'Rolando                                 ', N'Cantos                                  ', N'Masculino                               ', CAST(N'1970-10-27' AS Date), CAST(N'2020-03-25' AS Date), CAST(N'11:00:00' AS Time), N'Covid19                                 ', 2)
-INSERT [dbo].[fallecidos] ([fallecido_id], [fall_name], [fall_apellido], [fall_genero], [fall_fecha_de_naci], [fall_fecha_defunsion], [fall_hora_defunsion], [fall_causa_de_m], [serv_id]) VALUES (3, N'Juanita                                 ', N'Briones                                 ', N'Femenino                                ', CAST(N'1995-02-19' AS Date), CAST(N'2027-02-19' AS Date), CAST(N'01:00:00' AS Time), N'Infarto                                 ', 3)
-INSERT [dbo].[fallecidos] ([fallecido_id], [fall_name], [fall_apellido], [fall_genero], [fall_fecha_de_naci], [fall_fecha_defunsion], [fall_hora_defunsion], [fall_causa_de_m], [serv_id]) VALUES (4, N'Lola                                    ', N'Mendoza                                 ', N'Femenino                                ', CAST(N'2000-04-20' AS Date), CAST(N'2030-02-20' AS Date), CAST(N'12:00:00' AS Time), N'Infarto                                 ', 4)
-INSERT [dbo].[fallecidos] ([fallecido_id], [fall_name], [fall_apellido], [fall_genero], [fall_fecha_de_naci], [fall_fecha_defunsion], [fall_hora_defunsion], [fall_causa_de_m], [serv_id]) VALUES (5, N'Bryan                                   ', N'Bravo                                   ', N'Masculino                               ', CAST(N'2001-05-02' AS Date), CAST(N'2040-05-22' AS Date), CAST(N'01:00:00' AS Time), N'Covid19                                 ', 5)
-INSERT [dbo].[funeraria_eternidad] ([funer_id], [funer_direccion], [funer_telefono], [empl_id]) VALUES (1, N'calle 10 ave 13', 987560241, 1)
-INSERT [dbo].[servicios] ([tipo_ser_id], [tipo_ser_nombre], [tipo_ser_precio], [tipo_ser_tiempo], [empl_id], [fall_id], [promedio]) VALUES (1, N'alquiler de sala con ataud                        ', CAST(200 AS Numeric(18, 0)), CAST(N'02:00:00' AS Time), 1, 1, NULL)
-INSERT [dbo].[servicios] ([tipo_ser_id], [tipo_ser_nombre], [tipo_ser_precio], [tipo_ser_tiempo], [empl_id], [fall_id], [promedio]) VALUES (2, N'venta de ataud                                    ', CAST(300 AS Numeric(18, 0)), CAST(N'15:00:00' AS Time), 1, 2, NULL)
-INSERT [dbo].[servicios] ([tipo_ser_id], [tipo_ser_nombre], [tipo_ser_precio], [tipo_ser_tiempo], [empl_id], [fall_id], [promedio]) VALUES (3, N'alquiler de sala sin ataud                        ', CAST(500 AS Numeric(18, 0)), CAST(N'12:00:00' AS Time), 1, 3, NULL)
-INSERT [dbo].[servicios] ([tipo_ser_id], [tipo_ser_nombre], [tipo_ser_precio], [tipo_ser_tiempo], [empl_id], [fall_id], [promedio]) VALUES (4, N'embalsamiento                                     ', CAST(400 AS Numeric(18, 0)), CAST(N'10:00:00' AS Time), 2, 4, NULL)
-INSERT [dbo].[servicios] ([tipo_ser_id], [tipo_ser_nombre], [tipo_ser_precio], [tipo_ser_tiempo], [empl_id], [fall_id], [promedio]) VALUES (5, N'transporte de cementerio                          ', CAST(900 AS Numeric(18, 0)), CAST(N'14:00:00' AS Time), 2, 5, NULL)
-INSERT [dbo].[velatorio] ([vela_id], [vela_ n_sala], [vela_hora_de_reserva], [vela_hora_de_limpieza], [vela_capacidad], [funer_id], [fall_id]) VALUES (1, 10, CAST(N'02:00:00' AS Time), CAST(N'01:30:00' AS Time), 150, 1, 1)
-INSERT [dbo].[velatorio] ([vela_id], [vela_ n_sala], [vela_hora_de_reserva], [vela_hora_de_limpieza], [vela_capacidad], [funer_id], [fall_id]) VALUES (2, 30, CAST(N'03:00:00' AS Time), CAST(N'02:20:00' AS Time), 200, 1, 2)
-INSERT [dbo].[velatorio] ([vela_id], [vela_ n_sala], [vela_hora_de_reserva], [vela_hora_de_limpieza], [vela_capacidad], [funer_id], [fall_id]) VALUES (3, 11, CAST(N'02:00:00' AS Time), CAST(N'01:00:00' AS Time), 100, 1, 3)
-INSERT [dbo].[velatorio] ([vela_id], [vela_ n_sala], [vela_hora_de_reserva], [vela_hora_de_limpieza], [vela_capacidad], [funer_id], [fall_id]) VALUES (4, 12, CAST(N'10:00:00' AS Time), CAST(N'09:30:00' AS Time), 150, 1, 4)
-USE [master]
-GO
-ALTER DATABASE [funeraria eternidad] SET  READ_WRITE 
-GO
+/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+create table FACTURA (
+   FAC_ID               INT                 not null,
+   FUNER_ID             INT             not null,
+   FAC_FECHA            DATE                 not null,
+   FAC_TOTAL            DECIMAL              not null,
+   constraint PK_FACTURA primary key (FAC_ID)
+);
+
+/*==============================================================*/
+/* Index: FACTURA_PK                                            */
+/*==============================================================*/
+create unique index FACTURA_PK on FACTURA (
+FAC_ID
+);
+
+/*==============================================================*/
+/* Index: FUNER_TIENE_FACTURA_FK                                */
+/*==============================================================*/
+create  index FUNER_TIENE_FACTURA_FK on FACTURA (
+FUNER_ID
+);
+
+/*==============================================================*/
+/* Table: FALLECIDO                                             */
+/*==============================================================*/
+create table FALLECIDO (
+   FALLECIDO_ID         INT                 not null,
+   FULL_NAME            CHAR(50)             not null,
+   FULL_APELLIDO        CHAR(50)             not null,
+   FALL_GENERO_         CHAR(50)             not null,
+   FALL_FECHA_DE_NACI   DATE                 not null,
+   FALL_FECHA_DEFUNCION DATE                 not null,
+   FALL_HORA_DEFUNSION  TIME                 not null,
+   FALL_CAUSA_DE_M      CHAR(50)             not null,
+   constraint PK_FALLECIDO primary key (FALLECIDO_ID)
+);
+
+/*==============================================================*/
+/* Index: FALLECIDOS_PK                                         */
+/*==============================================================*/
+create unique index FALLECIDOS_PK on FALLECIDO (
+FALLECIDO_ID
+);
+
+/*==============================================================*/
+/* Table: FUNERARIA_ETERNIDAD                                   */
+/*==============================================================*/
+create table FUNERARIA_ETERNIDAD (
+   FUNER_ID             INT            not null,
+   FUNER_NOMBRE			CHAR(50)		not null,
+   FUNER_DIRECCIONES    CHAR(50)             not null,
+   constraint PK_FUNERARIA_ETERNIDAD primary key (FUNER_ID)
+);
+
+/*==============================================================*/
+/* Index: FUNERARIA_PK                                          */
+/*==============================================================*/
+create unique index FUNERARIA_PK on FUNERARIA_ETERNIDAD (
+FUNER_ID
+);
+
+/*==============================================================*/
+/* Table: RESERVA_DETALLE                                       */
+/*==============================================================*/
+create table RESERVA_DETALLE (
+   RESERVA_ID           INT                 not null,
+   TIPO_SER_ID          INT                 null,
+   EMPL_ID              INT                 null,
+   FAC_ID               INT                null,
+   FALLECIDO_ID         INT                 null,
+   VELA_ID              INT             null,
+   CLI_ID               INT            null,
+   RESERVA_FECHA_INGRESO DATE                 not null,
+   RESERVA_FECHA_SALIDA DATE                 not null,
+   RESERVA_OBSERVACIONES CHAR(150)            not null,
+   constraint PK_RESERVA_DETALLE primary key (RESERVA_ID)
+);
+
+/*==============================================================*/
+/* Index: RESERVA_DETALLE_PK                                    */
+/*==============================================================*/
+create unique index RESERVA_DETALLE_PK on RESERVA_DETALLE (
+RESERVA_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_3_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_3_FK on RESERVA_DETALLE (
+TIPO_SER_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_4_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_4_FK on RESERVA_DETALLE (
+FALLECIDO_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_5_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_5_FK on RESERVA_DETALLE (
+CLI_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_7_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_7_FK on RESERVA_DETALLE (
+FAC_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_8_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_8_FK on RESERVA_DETALLE (
+EMPL_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_9_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_9_FK on RESERVA_DETALLE (
+VELA_ID
+);
+
+/*==============================================================*/
+/* Table: SERVICIO                                              */
+/*==============================================================*/
+create table SERVICIO (
+   TIPO_SER_ID          INT                 not null,
+   TIPO_SER_NOMBRE      CHAR(50)             not null,
+   TIPO_SER_PRECIO      DECIMAL              not null,
+   TIPO_SER_TIEMPO      TIME                 null,
+   constraint PK_SERVICIO primary key (TIPO_SER_ID)
+);
+
+/*==============================================================*/
+/* Index: SERVICIO_PK                                           */
+/*==============================================================*/
+create unique index SERVICIO_PK on SERVICIO (
+TIPO_SER_ID
+);
+
+/*==============================================================*/
+/* Table: VELATORIO                                             */
+/*==============================================================*/
+create table VELATORIO (
+   VELA_ID              INT           not null,
+   FUNER_ID             INT             null,
+   VELA_SALA            INT                 not null,
+   VELA_HORA_DE_RESERVA time                not null,
+   VELA_HORA_DE_        time               not null,
+   VELA_MAQUINA_CAFE    DECIMAL              null,
+   VELA_CAPACIDAD       INT                 not null,
+   constraint PK_VELATORIO primary key (VELA_ID)
+);
+
+/*==============================================================*/
+/* Index: VELATORIO_PK                                          */
+/*==============================================================*/
+create unique index VELATORIO_PK on VELATORIO (
+VELA_ID
+);
+
+/*==============================================================*/
+/* Index: FUNER_TIENE_VELA_FK                                   */
+/*==============================================================*/
+create  index FUNER_TIENE_VELA_FK on VELATORIO (
+FUNER_ID
+);
+
+alter table EMPLEADO
+   add constraint FK_EMPLEADO_FUNER_TIE_FUNERARI foreign key (FUNER_ID)
+      references FUNERARIA_ETERNIDAD (FUNER_ID)
+     
+
+alter table FACTURA
+   add constraint FK_FACTURA_FUNER_TIE_FUNERARI foreign key (FUNER_ID)
+      references FUNERARIA_ETERNIDAD (FUNER_ID)
+      
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_SERVICIO foreign key (TIPO_SER_ID)
+      references SERVICIO (TIPO_SER_ID)
+      
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_FALLECID foreign key (FALLECIDO_ID)
+      references FALLECIDO (FALLECIDO_ID)
+    
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_CLIENTE foreign key (CLI_ID)
+      references CLIENTE (CLI_ID)
+     
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_FACTURA foreign key (FAC_ID)
+      references FACTURA (FAC_ID)
+    
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_EMPLEADO foreign key (EMPL_ID)
+      references EMPLEADO (EMPL_ID)
+     
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_VELATORI foreign key (VELA_ID)
+      references VELATORIO (VELA_ID)
+     
+
+alter table VELATORIO
+   add constraint FK_VELATORI_RELATIONS_FUNERARI foreign key (FUNER_ID)
+      references FUNERARIA_ETERNIDAD (FUNER_ID)
+     
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO FUNERARIA_ETERNIDAD values (1,'Eternidad','calle 111 ave 10');
+
+INSERT INTO SERVICIO values (1,'VENTA ATAUD',300,'10:00');
+INSERT INTO SERVICIO values (2,'ALQUILER DE SALA CON ATAUD',500,'11:00');
+INSERT INTO SERVICIO values (3,'ALQUILER DE SALA SIN ATAUD',200,'12:00');
+INSERT INTO SERVICIO values (4,'EMBALSAMIENTO',200,'10:00');
+INSERT INTO SERVICIO values (5,'ACOMPAÑAMIENTO MUSICAL',150,'12:00');
+INSERT INTO SERVICIO values (6,'TRANSPORTE AL CEMENTERIO',600,'1:00');
+
+
+INSERT INTO VELATORIO values (1,1,10,'10:00','9:30',null,160);
+INSERT INTO VELATORIO values (2,1,11,'11:00','10:30',null,200);
+INSERT INTO VELATORIO values (3,1,12,'1:00','12:30',null,400);
+INSERT INTO VELATORIO values (4,1,13,'1:00','12:30',null,500);
+
+
+INSERT INTO EMPLEADO values (1,1,'Juan','Lopez','calle 10 ave 11','1995/10/20','2016/10/20','VENDEDOR');
+INSERT INTO EMPLEADO values (2,1,'Mario','Macias','calle 5 ave 15','1989/02/20','2017/05/20','MATENIMIENTO');
+INSERT INTO EMPLEADO values (3,1,'Daniel','Mendoza','calle 15 ave 20','1992/05/15','2015/12/20','EMBALSAMIENTO');
+INSERT INTO EMPLEADO values (4,1,'Juanita','Lopez','calle 16 ave 11','1995/02/15','2018/11/01','MAQUILLAJE');
+
+
+INSERT INTO CLIENTE values (1,'Jose','Briones',0984374560,'calle 110 ave 15');
+INSERT INTO CLIENTE values (2,'Maria','Delgado',0984375621,'calle 10 ave 13');
+INSERT INTO CLIENTE values (3,'Daniel','Quijije',0984323450,'calle 11 ave 15');
+INSERT INTO CLIENTE values (4,'Bryan','Briones',0974375621,'calle 112 ave 12');
+INSERT INTO CLIENTE values (5,'Jose','Espinales',0992375621,'calle 110 ave 19');
+---cli_id ---- cli_nombre---cli_apellido---cli_telefono---cli_direccion
+
+
+
+INSERT INTO FALLECIDO values (1,'Maria','Lopez','Mujer','1995/12/15','2020/10/01','12:00','Covid19');
+INSERT INTO FALLECIDO values (2,'Juan','Macias','Hombre','1965/05/19','2020/11/06','11:00','Covid19');
+INSERT INTO FALLECIDO values (3,'Bryan','Mendoza','Hombre','1987/10/01','2020/05/01','12:00','Covid19');
+INSERT INTO FALLECIDO values (4,'Lola','Lopez','Mujer','1988/11/05','2020/02/09','1:00','Infarto');
+INSERT INTO FALLECIDO values (5,'Juanita','Briones','Mujer','1992/10/10','2020/04/05','12:00','Infarto');
+
+INSERT INTO FACTURA values (1,1,'2020/10/03',900);
+INSERT INTO FACTURA values (2,1,'2020/06/03',500);
+INSERT INTO FACTURA values (3,1,'2020/11/03',300);
+INSERT INTO FACTURA values (4,1,'2020/02/03',200);
+INSERT INTO FACTURA values (5,1,'2020/05/10',400);
+
+
+INSERT INTO RESERVA_DETALLE values (1,1,1,1,1,2,1,'2020/10/02','2020/10/03','NO HUBO OBSERVACIONES');
+INSERT INTO RESERVA_DETALLE values (2,2,2,2,2,4,2,'2020/06/02','2020/06/03','NO HUBO OBSERVACIONES');
+INSERT INTO RESERVA_DETALLE values (3,3,3,3,3,3,3,'2020/11/02','2020/11/03','NO HUBO OBSERVACIONES');
+INSERT INTO RESERVA_DETALLE values (4,3,3,4,4,1,4,'2020/02/02','2020/02/03','NO HUBO OBSERVACIONES');
+INSERT INTO RESERVA_DETALLE values (5,3,3,5,5,2,5,'2020/05/09','2020/05/10','NO HUBO OBSERVACIONES');
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 CONSULTA
