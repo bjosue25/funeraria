@@ -327,32 +327,32 @@ select cast (CAST(AVG (cast(cast(tipo_ser_tiempo AS datetime)as float))as dateti
 	cast (CAST(AVG (cast(cast(fall_hora_defunsion  AS datetime)as float))as datetime)as time)total_hora_defunsion,
 	cast(cast(sum(cast(CAST(tipo_ser_tiempo as datetime) as float)) as datetime) as time) TotalTimecondicion 
 
-from servicios, fallecidos
-WHERE        (dbo.servicios.tipo_ser_nombre = 'embalsamiento');
+from SERVICIO, FALLECIDO
+WHERE        (dbo.SERVICIO.tipo_ser_nombre = 'embalsamiento');
 
 go
 
 //
  - Cantidad de veces por cada sala de velación en donde se alquile el espacio y no se venda el ataúd. 
 
-SELECT        dbo.servicios.tipo_ser_nombre, dbo.velatorio.[vela_ n_sala], dbo.velatorio.vela_capacidad, dbo.servicios.empl_id, dbo.velatorio.vela_id
-FROM            dbo.servicios CROSS JOIN
+SELECT        dbo.SERVICIO.tipo_ser_nombre, dbo.velatorio.[vela_sala], dbo.velatorio.vela_capacidad, dbo.velatorio.vela_id
+FROM            dbo.SERVICIO CROSS JOIN
                          dbo.velatorio
-WHERE        (dbo.servicios.tipo_ser_nombre = 'alquiler de sala sin ataud')
+WHERE        (dbo.SERVICIO.tipo_ser_nombre = 'alquiler de sala sin ataud')
 
 //
 - Agentes vendedores que hayan logrado alquilar el espacio y vender el ataúd. 
 //
-SELECT        dbo.empleado.empl_nombre, dbo.servicios.tipo_ser_nombre, dbo.velatorio.[vela_ n_sala]
-FROM            dbo.empleado INNER JOIN
-                         dbo.servicios ON dbo.empleado.empl_id = dbo.servicios.empl_id INNER JOIN
-                         dbo.velatorio ON dbo.empleado.vela_id = dbo.velatorio.vela_id
-WHERE        (dbo.servicios.tipo_ser_nombre = 'alquiler de sala sin ataud')
+SELECT        dbo.EMPLEADO.EMPL_NOMBRES, dbo.SERVICIO.TIPO_SER_NOMBRE, dbo.VELATORIO.VELA_SALA, dbo.EMPLEADO.TIPO_EMPLEADO
+FROM            dbo.EMPLEADO CROSS JOIN
+                         dbo.SERVICIO CROSS JOIN
+                         dbo.VELATORIO
+WHERE        (dbo.SERVICIO.TIPO_SER_NOMBRE = 'ALQUILER DE SALA CON ATAUD') AND (dbo.EMPLEADO.EMPL_NOMBRES = 'JUAN')
 //
 
 //
 - Suma total de cada causa de defunción. 
-select fall_causa_de_m,count(fall_causa_de_m)as total_causa_defunsion from fallecidos
+select fall_causa_de_m,count(fall_causa_de_m)as total_causa_defunsion from FALLECIDO
 group by fall_causa_de_m having count (fall_causa_de_m)>1;
 
 //
